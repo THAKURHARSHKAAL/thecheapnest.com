@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const navLinks = [
@@ -10,6 +10,7 @@ const navLinks = [
   { name: "Packages", href: "/packages" },
   { name: "Solo Connect", href: "/solo-connect" },
   { name: "Community", href: "/community" },
+  { name: "Admin", href: "/admin", icon: Shield },
 ];
 
 const Navbar = () => {
@@ -37,8 +38,9 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium hover:scale-105 transform"
+                className="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium hover:scale-105 transform flex items-center gap-1"
               >
+                {link.icon && <link.icon size={16} />}
                 {link.name}
               </Link>
             ))}
@@ -85,9 +87,10 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-500 hover:scale-105 transform transition-all duration-200"
+                className="flex items-center gap-1 px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-500 hover:scale-105 transform transition-all duration-200"
                 onClick={() => setIsMenuOpen(false)}
               >
+                {link.icon && <link.icon size={16} />}
                 {link.name}
               </Link>
             ))}
@@ -112,4 +115,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
