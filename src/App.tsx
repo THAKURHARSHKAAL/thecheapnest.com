@@ -10,6 +10,7 @@ import BudgetTrip from "./pages/BudgetTrip";
 import Packages from "./pages/Packages";
 import SoloConnect from "./pages/SoloConnect";
 import Community from "./pages/Community";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,7 @@ const App = () => (
           <Route path="/packages" element={<Packages />} />
           <Route path="/solo-connect" element={<SoloConnect />} />
           <Route path="/community" element={<Community />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/admin/*" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
