@@ -23,9 +23,9 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 group">
               <div className="flex items-center">
-                <span className="text-3xl animate-bounce">🪽</span>
+                <span className="text-3xl animate-bounce">🏡</span>
                 <span className="text-2xl font-heading font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse group-hover:scale-105 transition-transform duration-200">
-                  Cheapnest.com
+                  Cheapnest
                 </span>
               </div>
             </Link>
@@ -112,3 +112,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

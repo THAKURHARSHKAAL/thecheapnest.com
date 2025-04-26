@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -11,18 +10,18 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-6 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-udaan-dark">
-              Travel <span className="text-udaan-blue">Beautifully</span> on a Budget
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-800">
+              Travel <span className="text-blue-500">Smartly</span> with Cheapnest
             </h1>
             <p className="text-lg md:text-xl text-gray-600 max-w-lg">
-              Explore dream destinations without breaking the bank. 
-              Personalized budget trips, pre-made packages, and a community to travel with.
+              Discover affordable travel experiences without compromising on quality. 
+              Personalized budget trips, curated packages, and a community to explore with.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-udaan-blue hover:bg-udaan-blue/90 text-white">
+              <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white">
                 <Link to="/budget-trip">Plan My Trip</Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-udaan-blue text-udaan-blue hover:bg-udaan-blue hover:text-white">
+              <Button size="lg" variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white">
                 <Link to="/packages">Browse Packages</Link>
               </Button>
             </div>
