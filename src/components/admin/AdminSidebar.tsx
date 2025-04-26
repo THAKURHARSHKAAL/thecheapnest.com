@@ -27,13 +27,22 @@ export const AdminSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <h2 className="text-lg font-bold">Admin Dashboard</h2>
+        <div className="flex items-center space-x-2">
+          <span className="text-2xl">🏔️</span>
+          <h2 className="text-lg font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+            Admin Panel
+          </h2>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.path}>
-              <SidebarMenuButton asChild isActive={location.pathname === item.path}>
+              <SidebarMenuButton 
+                asChild 
+                isActive={location.pathname === item.path}
+                className="transition-all duration-200 hover:translate-x-1"
+              >
                 <Link to={item.path} className="w-full">
                   <item.icon className="w-5 h-5" />
                   <span>{item.title}</span>
