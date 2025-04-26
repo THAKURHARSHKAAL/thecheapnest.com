@@ -1,6 +1,6 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
+import { Plane } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -8,11 +8,14 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           <div className="col-span-2">
-            <Link to="/" className="inline-block mb-4">
-              <span className="text-2xl font-heading font-bold text-white">Udaan</span>
+            <Link to="/" className="inline-block mb-4 flex items-center space-x-2">
+              <Plane className="text-blue-500 w-8 h-8" />
+              <span className="text-2xl font-heading font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                TheCheapnest
+              </span>
             </Link>
             <p className="text-gray-400 mb-4">
-              Making budget travel accessible, social, and unforgettable for everyone.
+              Transforming travel dreams into affordable realities, one journey at a time.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -68,10 +71,10 @@ const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-gray-800 text-center sm:text-left sm:flex sm:justify-between">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} Udaan. All rights reserved.
+            &copy; {new Date().getFullYear()} TheCheapnest. All rights reserved.
           </p>
           <p className="text-gray-400 text-sm mt-2 sm:mt-0">
-            Made with ❤️ for travelers everywhere
+            Crafting budget-friendly travel experiences
           </p>
         </div>
       </div>

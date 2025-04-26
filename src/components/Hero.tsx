@@ -1,37 +1,25 @@
-import React, { useState, useEffect } from "react";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Plane } from "lucide-react";
 import BudgetTripForm from "./BudgetTripForm";
-
-const images = [
-  {
-    url: "https://images.unsplash.com/photo-1501854140801-50d01698950b",
-    alt: "Mountains aerial view"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-    alt: "Mountain with sun rays"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb",
-    alt: "River between mountains"
-  }
-];
 
 const Hero = () => {
   return (
     <div className="relative min-h-screen">
-      {/* Content */}
       <div className="relative container mx-auto px-4 pt-32 pb-16 sm:pt-40 sm:pb-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
           <div className="space-y-6 animate-fade-in text-white">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Travel <span className="text-blue-400">Smartly</span> with Cheapnest
-            </h1>
+            <div className="flex items-center space-x-3">
+              <Plane className="text-blue-400 w-12 h-12 animate-float" />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                Travel <span className="text-blue-400">Smartly</span> with TheCheapnest
+              </h1>
+            </div>
             <p className="text-lg md:text-xl text-gray-200 max-w-lg">
-              Discover affordable travel experiences without compromising on quality. 
-              Personalized budget trips, curated packages, and a community to explore with.
+              Unlock affordable adventures without compromising quality. 
+              Your gateway to budget-friendly, memorable experiences.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white animate-float">
@@ -43,7 +31,6 @@ const Hero = () => {
             </div>
           </div>
           
-          {/* Right Content */}
           <div className="bg-white/80 p-6 rounded-xl shadow-lg animate-fade-in">
             <BudgetTripForm />
           </div>
