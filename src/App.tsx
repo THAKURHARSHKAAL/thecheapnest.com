@@ -11,6 +11,7 @@ import Packages from "./pages/Packages";
 import SoloConnect from "./pages/SoloConnect";
 import Community from "./pages/Community";
 import Admin from "./pages/Admin";
+import Bot from "./pages/Bot";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/solo-connect" element={<SoloConnect />} />
           <Route path="/community" element={<Community />} />
           <Route path="/admin/*" element={<Admin />} />
+          <Route path="/bot" element={<Bot />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
