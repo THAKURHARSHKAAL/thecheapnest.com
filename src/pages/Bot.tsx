@@ -23,6 +23,18 @@ const Bot = () => {
     return "Moderate";
   }, [fundUsage, leverage, stopLoss]);
 
+  const advanced3DNodes = useMemo(() => {
+    const riskPressure = leverage * (fundUsage / 100) + stopLoss;
+    const rewardToRisk = takeProfit / Math.max(stopLoss, 0.1);
+    return [
+      { stage: "Market Feed", x: 0, y: volumeSpike, z: 1.0 },
+      { stage: "TA Engine", x: 1, y: volumeSpike * 0.8, z: 1.4 },
+      { stage: "Signal Logic", x: 2, y: rewardToRisk * 2, z: 2.1 },
+      { stage: "Risk Model", x: 3, y: riskPressure / 10, z: 2.6 },
+      { stage: "Order Placement", x: 4, y: rewardToRisk, z: 3.0 },
+    ];
+  }, [fundUsage, leverage, stopLoss, takeProfit, volumeSpike]);
+
   return (
     <main className="min-h-screen bg-slate-950 px-4 py-8 text-slate-100 md:px-8">
       <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-2">
@@ -84,10 +96,13 @@ const Bot = () => {
               <p className="flex items-start gap-2"><ShieldAlert className="mt-0.5 h-4 w-4 text-red-400" />Using 80% capital with very high leverage can liquidate your account quickly. Start in paper trading mode.</p>
             </div>
 
-            <Button className="w-full">Generate Strategy JSON + Execution Plan</Button>
+            <Button className="w-full">Generate Strategy JSON + Advanced Module Plan</Button>
 
             <div className="rounded-lg border border-slate-700 bg-slate-950/70 p-3 text-xs text-slate-300">
               Backend API: <code className="text-cyan-300">POST /strategy/signal</code> and <code className="text-cyan-300">POST /orders/execute</code> (Python FastAPI in <code className="text-cyan-300">/backend</code>).
+            </div>
+            <div className="rounded-lg border border-cyan-600/30 bg-cyan-950/20 p-3 text-xs text-cyan-100">
+              Advanced Module API: <code className="text-cyan-300">POST /strategy/advanced-module</code> to run the same strategy with additional 3D graph metrics.
             </div>
 
           </CardContent>
@@ -110,6 +125,16 @@ const Bot = () => {
             <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded-md bg-slate-800 p-3"><BarChart3 className="mb-1 h-4 w-4 text-cyan-400" />Volume spike trigger: {volumeSpike}x avg volume</div>
               <div className="rounded-md bg-slate-800 p-3"><AlertTriangle className="mb-1 h-4 w-4 text-amber-400" />Auto exit: -{stopLoss}% / +{takeProfit}%</div>
+            </div>
+            <div className="mt-4 rounded-lg border border-slate-700 bg-slate-950/70 p-3 text-xs text-slate-200">
+              <p className="mb-2 font-semibold text-cyan-300">Advanced 3D graph nodes (preview from current inputs)</p>
+              <div className="space-y-1">
+                {advanced3DNodes.map((node) => (
+                  <p key={node.stage}>
+                    {node.stage}: ({node.x.toFixed(1)}, {node.y.toFixed(2)}, {node.z.toFixed(1)})
+                  </p>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>

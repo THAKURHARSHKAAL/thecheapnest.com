@@ -47,6 +47,16 @@ class ExecuteOrderRequest(BaseModel):
     take_profit_percent: float = Field(default=4, gt=0)
 
 
+class AdvancedModuleRequest(BaseModel):
+    symbol: str = Field(examples=["ETHUSDT"])
+    candles: list[Candle] = Field(min_length=80)
+    volume_spike_threshold: float = 2.0
+    leverage: int = Field(default=5, ge=1)
+    use_funds_percent: float = Field(default=10, gt=0, le=100)
+    stop_loss_percent: float = Field(default=2, gt=0)
+    take_profit_percent: float = Field(default=4, gt=0)
+
+
 def ema(values: list[float], period: int) -> float:
     k = 2 / (period + 1)
     out = values[0]
@@ -79,6 +89,49 @@ def build_signal(payload: SignalRequest) -> dict:
             "momentum_pct_5m": round(momentum, 4),
             "volume_ratio": round(volume_ratio, 4),
         },
+    }
+
+
+def build_advanced_module(payload: AdvancedModuleRequest) -> dict:
+    base_signal = build_signal(
+        SignalRequest(
+            symbol=payload.symbol,
+            candles=payload.candles,
+            volume_spike_threshold=payload.volume_spike_threshold,
+        )
+    )
+    closes = [c.close for c in payload.candles]
+    rolling_window = 12
+    rolling_returns: list[float] = []
+    for i in range(rolling_window, len(closes)):
+        previous = closes[i - rolling_window]
+        if previous == 0:
+            rolling_returns.append(0)
+            continue
+        rolling_returns.append((closes[i] - previous) / previous * 100)
+    momentum_heat = rolling_returns[-1] if rolling_returns else 0
+
+    utilization = payload.use_funds_percent / 100
+    risk_pressure = payload.leverage * utilization + payload.stop_loss_percent
+    expected_reward = payload.take_profit_percent / max(payload.stop_loss_percent, 0.1)
+
+    three_d_flow = [
+        {"stage": "Market Feed", "x": 0, "y": round(base_signal["indicators"]["volume_ratio"], 3), "z": 1.0},
+        {"stage": "TA Engine", "x": 1, "y": round(base_signal["indicators"]["momentum_pct_5m"], 3), "z": 1.4},
+        {"stage": "Signal Logic", "x": 2, "y": round(base_signal["confidence"] / 20, 3), "z": 2.1},
+        {"stage": "Risk Model", "x": 3, "y": round(risk_pressure / 10, 3), "z": 2.6},
+        {"stage": "Order Placement", "x": 4, "y": round(expected_reward, 3), "z": 3.0},
+    ]
+
+    return {
+        "symbol": payload.symbol,
+        "strategy": base_signal,
+        "advanced_metrics": {
+            "risk_pressure": round(risk_pressure, 3),
+            "reward_to_risk": round(expected_reward, 3),
+            "momentum_heat": round(momentum_heat, 3),
+        },
+        "three_d_graph": three_d_flow,
     }
 
 
@@ -134,3 +187,10 @@ async def execute_order(payload: ExecuteOrderRequest) -> dict:
         raise HTTPException(status_code=resp.status_code, detail=resp.text)
 
     return {"mode": "live", "response": resp.json()}
+
+
+@app.post("/strategy/advanced-module")
+def strategy_advanced_module(payload: AdvancedModuleRequest) -> dict:
+    if payload.leverage > MAX_LEVERAGE:
+        raise HTTPException(status_code=400, detail=f"Leverage too high. Max allowed is {MAX_LEVERAGE}x")
+    return build_advanced_module(payload)

@@ -13,6 +13,7 @@ uvicorn app:app --reload --port 8000
 ## Endpoints
 - `GET /health`
 - `POST /strategy/signal` : send at least 50 candles of 5m data
+- `POST /strategy/advanced-module` : same signal strategy with advanced risk metrics and 3D graph node output
 - `POST /orders/execute` : dry-run by default, live order only when `DRY_RUN=false`
 
 ## Security notes
